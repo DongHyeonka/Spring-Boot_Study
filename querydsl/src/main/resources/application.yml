@@ -3,19 +3,26 @@ spring:
     active: local
 
   datasource:
-    url: jdbc:mysql://localhost:3306/querydsl
-    username: root
-    password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:querydsl
+    username: sa
+    password:
+  
+  h2:
+    console:
+      enabled: true  # H2 콘솔 활성화
+      path: /h2-console  # 콘솔 접속 경로
+
   jpa:
-    hibernate:
-      ddl-auto: create
     properties:
       hibernate:
         dialect: #만약 DB가 바뀌게 된다면 이 속성을 DB에 맞는 걸 추가해서 사용하게 되면 바로 페이징이 돌아간다.
-        format:
-          sql: true
+        format_sql: true
+        highlight_sql: true
+        hbm2ddl.auto: create
+        default_batch_fetch_size: 100
         use_sql_comments: true #만약 querydsl을 사용할 때 어떤 jpql이 날라가는지 궁금할 수 있는데 이때 이 옵션을 사용하게 되면 볼 수 있다.
+    show-sql: true
   data:
     web:
       pageable:

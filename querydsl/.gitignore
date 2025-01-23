@@ -41,3 +41,4 @@ src/main/generated
 
 .codiumai.toml
 .cursorrules
+**/docs/
