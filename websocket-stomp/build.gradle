@@ -18,9 +18,30 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
+	// Spring Security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	// Spring Data JPA
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// WebSocket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	// H2 Database
+	implementation 'com.h2database:h2'
+	// Spring Web
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// Lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	// JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+	// Spring Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	// Lombok Test
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testImplementation 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {
