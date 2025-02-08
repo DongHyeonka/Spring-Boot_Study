@@ -75,4 +75,3 @@ public class ChatController {
         // 채팅방 멤버 목록 업데이트 알림
     }
 }
-
