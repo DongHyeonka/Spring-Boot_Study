@@ -1,0 +1,48 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.2'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.springboot'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// Aws SNS
+	implementation 'software.amazon.awssdk:sns'
+	// Aws SDK bom
+	implementation platform('software.amazon.awssdk:bom:2.5.29')
+	// Slack
+	implementation 'com.slack.api:bolt:1.18.0'
+	// Slack Servlet
+	implementation 'com.slack.api:bolt-servlet:1.18.0'
+	// Slack Jetty
+	implementation 'com.slack.api:bolt-jetty:1.18.0'
+	// Spring Boot
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// JUnit
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	// Spring Cloud
+	compileOnly group: 'org.springframework.cloud', name: 'spring-cloud-aws-messaging', version: '2.2.1.RELEASE'
+	// Spring Cloud Auto Configuration
+	compileOnly group: 'org.springframework.cloud', name: 'spring-cloud-aws-autoconfigure', version: '2.2.1.RELEASE'
+
+	// Lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

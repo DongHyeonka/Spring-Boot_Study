@@ -1,0 +1,20 @@
+
+sns:
+  topic:
+    arn:arn:blabla
+
+aws:
+  accessKey: blabla
+  region: ap-northeast-2
+  secretKey: blabla
+
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+
+# slack
+slack:
+  token: blabla
