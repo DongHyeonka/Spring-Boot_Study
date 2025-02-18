@@ -3,10 +3,8 @@ package com.springboot.websocket.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.RequestCacheConfigurer;
-import org.springframework.security.config.annotation.web.socket.EnableWebSocketSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -19,8 +17,8 @@ import org.springframework.security.web.SecurityFilterChain;
  * 3. 전역 보안 정책 메서드 수준 접근 제어 필수
  */
 @Configuration
-@EnableWebSocketSecurity
-public class WebSocketSecurityConfig extends WebSecurityConfiguration {
+//@EnableWebSocketSecurity // 웹소켓 보안 설정인데 이는 security 5.8에서 사용되었던 것이기 때문에 현재는 이를 사용하기에 적절하지 않음.
+public class WebSocketSecurityConfig {
     @Bean
     SecurityFilterChain webSocketSecurityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -32,8 +30,7 @@ public class WebSocketSecurityConfig extends WebSecurityConfiguration {
             .securityContext(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
                 .anyRequest().authenticated()
-            )
-            .csrf(csrf -> csrf.disable());
+            );
         return http.build();
     }
 }
