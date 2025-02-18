@@ -1,4 +1,4 @@
-package com.springboot.rabitmq.service;
+package com.springboot.rabitmq.service.application;
 
 import java.util.List;
 import java.util.Optional;

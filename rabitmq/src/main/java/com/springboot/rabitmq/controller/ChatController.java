@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.rabitmq.dto.ChatMessage;
 import com.springboot.rabitmq.publisher.MessagePublisher;
-import com.springboot.rabitmq.service.ChatService;
+import com.springboot.rabitmq.service.application.ChatService;
 
 import lombok.RequiredArgsConstructor;
 

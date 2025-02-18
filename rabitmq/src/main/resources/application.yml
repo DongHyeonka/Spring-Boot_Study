@@ -21,4 +21,66 @@ spring:
         max-concurrency: 10
 
 websocket:
-    allowed-origins: "*"
+  # WebSocket 엔드포인트 설정
+  endpoint: /ws
+  allowed-origins: "*"  # 프로덕션에서는 실제 도메인으로 변경 필요
+  heartbeat-time: 25000  # 25초
+  # STOMP 브로커 릴레이 설정
+  relay:
+    host: localhost
+    port: 61613
+    client:
+      login: guest
+      passcode: guest
+    system:
+      login: guest
+      passcode: guest
+      heartbeat:
+        send-interval: 5000    # 5초
+        receive-interval: 4000  # 4초
+
+  # 메시지 전송 제한 설정
+  transport:
+    message-size-limit: 65536        # 64KB (64 * 1024)
+    send-time-limit: 10000           # 10초
+    send-buffer-size-limit: 10485760 # 10MB (1024 * 1024 * 10)
+
+  # 목적지 프리픽스 설정
+  destination:
+    application-prefix: /app
+    user-prefix: /user
+    broker-prefixes:
+      - /topic
+      - /queue
+
+rabbitmq:
+  # Exchange 설정
+  exchange-name: chat.topic
+  
+  # Queue 설정
+  general-queue-name: chat.general
+  private-queue-name: chat.private
+  
+  # Dead Letter Exchange 설정
+  dead-letter:
+    exchange: chat.dlx
+    queue: chat.dead
+    routing-key: chat.dead
+  
+  # Consumer 설정
+  prefetch-count: 250
+  concurrent-consumers: 3
+  max-concurrent-consumers: 10
+  
+  # Producer 설정
+  reply-timeout: 5000
+  receive-timeout: 5000
+  batch-size: 100
+  buffer-limit: 10000
+  
+  # 메시지 TTL 설정 (밀리초)
+  message-ttl: 86400000  # 24시간
+
+  routing-key:
+    general-pattern: "chat.room.*"
+    private-pattern: "chat.user.#"

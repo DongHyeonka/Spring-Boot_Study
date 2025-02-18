@@ -25,7 +25,7 @@ public class MessageConsumer {
      * @param channel
      * @throws IOException
      */
-    @RabbitListener(queues = RabbitMQConfig.GENERAL_QUEUE)
+    @RabbitListener(queues = "#{rabbitMQProperties.generalQueueName}")
     public void handleMessage(Message message, Channel channel) throws IOException {
         try {
             // 메시지 처리 로직
@@ -45,7 +45,7 @@ public class MessageConsumer {
     /**
      * 개인 1대 1 채팅 메시지 처리 : 개인 큐 사용
      */
-    @RabbitListener(queues = RabbitMQConfig.PRIVATE_QUEUE)
+    @RabbitListener(queues = "${rabbitmq.general-queue-name}")
     public void handlePrivateChatMessage(Message message, Channel channel) throws IOException {
         try {
             // 개인 채팅 메시지 역직렬화
