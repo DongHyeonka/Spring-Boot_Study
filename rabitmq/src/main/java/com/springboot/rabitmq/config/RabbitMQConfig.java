@@ -15,6 +15,7 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springboot.rabitmq.settings.RabbitMQProperties;
 
 import lombok.RequiredArgsConstructor;
@@ -109,8 +110,8 @@ public class RabbitMQConfig {
 
     // 메시지의 직렬화 및 역직렬화를 JSON 형식으로 처리하기 위한 MessageConverter 설정 (Jackson2JsonMessageConverter 사용)
     @Bean
-    public static MessageConverter jsonMessageConverter() {
-        Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter();
+    public static MessageConverter jsonMessageConverter(ObjectMapper objectMapper) {
+        Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter(objectMapper);
         converter.setCreateMessageIds(true); // 메시지에 자동으로 고유 ID를 부여합니다.
         return converter;
     }

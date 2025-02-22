@@ -4,7 +4,6 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.core.RabbitTemplate.ConfirmCallback;
 import org.springframework.amqp.rabbit.core.RabbitTemplate.ReturnsCallback;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,23 +23,17 @@ public class RabbitMQProducerConfig {
     public RabbitTemplate rabbitTemplate(
         ConnectionFactory connectionFactory, 
         ConfirmCallback confirmCallback, 
-        ReturnsCallback returnsCallback
+        ReturnsCallback returnsCallback,
+        MessageConverter messageConverter
     ) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
-        template.setMessageConverter(jsonMessageConverter());
+        template.setMessageConverter(messageConverter);
         template.setMandatory(true);
         template.setReplyTimeout(properties.getReplyTimeout());
         template.setReceiveTimeout(properties.getReceiveTimeout());
         template.setConfirmCallback(confirmCallback);
         template.setReturnsCallback(returnsCallback);
         return template;
-    }
-
-    @Bean
-    public MessageConverter jsonMessageConverter() {
-        Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter();
-        converter.setCreateMessageIds(true);
-        return converter;
     }
 
     @Bean
