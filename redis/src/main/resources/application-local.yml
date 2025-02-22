@@ -1,0 +1,49 @@
+spring:
+  datasource:
+      driver-class-name: org.postgresql.Driver
+      url: jdbc:postgresql://${local-db.postgres.host}:${local-db.postgres.port}/${local-db.postgres.name}
+      username: ${local-db.postgres.username}
+      password: ${local-db.postgres.password}
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+        hbm2ddl.auto: create
+        default_batch_fetch_size: 100
+    open-in-view: false
+    show-sql: true
+  
+  data:
+    redis:
+      host: ${local-redis.redis.host}
+      port: ${local-redis.redis.port}
+      password: ${local-redis.redis.password}
+      timeout: ${local-redis.redis.timeout}
+      lettuce:
+        pool:
+          max-active: ${local-redis.redis.lettuce.pool.max-active}
+          max-idle: ${local-redis.redis.lettuce.pool.max-idle}
+          min-idle: ${local-redis.redis.lettuce.pool.min-idle}
+          max-wait: ${local-redis.redis.lettuce.pool.max-wait}
+      rdb: # 영속성 (Persistence) 설정
+        save: # RDB 스냅샷 설정 (주기 및 조건 설정)
+          - seconds: 60 # 60초마다
+            changes: 10000 # 10000번 이상의 키 변경이 있을 경우 스냅샷 저장
+          - seconds: 300 # 300초마다 (5분)
+            changes: 100 # 100번 이상의 키 변경이 있을 경우 스냅샷 저장
+          - seconds: 3600 # 3600초마다 (1시간)
+            changes: 1 # 1번 이상의 키 변경이 있을 경우 스냅샷 저장 (매시간 저장)
+      aof:
+        appendonly: true # AOF 모드 활성화
+        appendfsync: everysec # AOF fsync 정책 (데이터 동기화 시점)
+        auto-aof-rewrite-percentage: 100 # AOF 파일 크기 자동 재작성(rewrite) 시작 비율
+        auto-aof-rewrite-min-size: 64mb # AOF 파일 자동 재작성(rewrite) 최소 파일 크기
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: info
+        level: info

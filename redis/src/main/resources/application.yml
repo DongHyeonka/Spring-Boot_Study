@@ -1,0 +1,18 @@
+server:
+    port: 4000
+
+spring:
+    profiles:
+        default: local
+    
+    application:
+        name: RedisStudy
+    
+    config:
+        import:
+            - security/application-db.yml
+    
+    servlet:
+        multipart:
+            max-file-size: 5MB
+            max-request-size: 5MB
